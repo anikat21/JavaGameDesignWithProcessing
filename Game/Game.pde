@@ -1,5 +1,5 @@
 /* Game Class Starter File
- * Authors: Anika Adity
+ * Authors: Anika Adity & Naomi Santos Fernandez
  * Last Edit: 5/13/2024
  */
 
