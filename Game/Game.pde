@@ -19,12 +19,12 @@ Grid currentGrid;
 
 //Splash Screen Variables
 Screen splashScreen;
-String splashBgFile = "images/apcsa.png";
+String splashBgFile = "images/kingdom.jpg";
 PImage splashBg;
 
 //Level1 Screen Variables
 Grid mainGrid;
-String mainBgFile = "images/StartSet.jpg";
+String mainBgFile = "images/mode1.jpg";
 PImage mainBg;
 
 PImage player1;
