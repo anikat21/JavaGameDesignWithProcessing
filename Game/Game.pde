@@ -144,7 +144,7 @@ void keyPressed(){
     GridLocation oldLoc = new GridLocation(player1Row, 0);
 
     //Erase image from previous location
-    
+    //removeMark();
 
     //change the field for player1Row
     player1Row--;
