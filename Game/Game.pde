@@ -30,7 +30,7 @@ PImage mainBg;
 PImage player1;
 String player1File = "images/x_wood.png";
 int player1Row = 3;
-int health = 3;
+int health = 0;
 
 PImage enemy;
 AnimatedSprite enemySprite;
