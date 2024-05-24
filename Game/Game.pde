@@ -192,7 +192,7 @@ public void updateScreen(){
   background(currentScreen.getBg());
 
   //splashScreen update
-  if(splashScreen.getScreenTime() > 3000 && splashScreen.getScreenTime() < 5000){
+  if(splashScreen.getScreenTime() > 3000 && splashScreen.getScreenTime() < 8000){
     currentScreen = mainGrid;
   }
 
