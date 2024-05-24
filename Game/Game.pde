@@ -185,7 +185,7 @@ public void updateTitleBar(){
 
   if(!isGameOver()) {
     //set the title each loop
-    surface.setTitle(titleText + "    " + extraText + " " + health);
+    surface.setTitle(titleText + "    " + extraText + "    Total Points: " + points);
 
     //adjust the extra text as desired
   
