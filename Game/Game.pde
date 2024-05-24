@@ -27,10 +27,14 @@ Grid mainGrid;
 String mainBgFile = "images/mode1.jpg";
 PImage mainBg;
 
+PImage target1;
+String target1File = "images/target1.png";
+int points = 0;
+
 PImage player1;
 String player1File = "images/x_wood.png";
 int player1Row = 3;
-int health = 0;
+int health = 3;
 
 PImage enemy;
 AnimatedSprite enemySprite;
