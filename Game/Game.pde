@@ -75,12 +75,12 @@ void setup() {
   //setup the sprites  
   //player1 = loadImage(player1File);
   //player1.resize(mainGrid.getTileWidthPixels(),mainGrid.getTileHeightPixels());
-   //enemy1 = loadImage("images/target1.png");
-   //enemy1.resize(100,100);
-   //enemy2 = loadImage("images/target2.png");
-  // enemy2.resize(100,100);
-   //enemy3 = loadImage("images/target3.png");
-   //enemy3.resize(100,100);
+  //enemy1 = loadImage("images/target1.png");
+  //enemy1.resize(100,100);
+  //enemy2 = loadImage("images/target2.png");
+  //enemy2.resize(100,100);
+  //enemy3 = loadImage("images/target3.png");
+  //enemy3.resize(100,100);
   exampleAnimationSetup();
 
   //Adding pixel-based Sprites to the world
@@ -196,7 +196,7 @@ public void updateScreen(){
   background(currentScreen.getBg());
 
   //splashScreen update
-  if(splashScreen.getScreenTime() > 3000 && splashScreen.getScreenTime() < 8000){
+  if(splashScreen.getScreenTime() > 3000 && splashScreen.getScreenTime() < 10000){
     currentScreen = mainGrid;
   }
 
