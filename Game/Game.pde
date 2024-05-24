@@ -73,8 +73,8 @@ void setup() {
   currentScreen = splashScreen;
 
   //setup the sprites  
-  player1 = loadImage(player1File);
-  player1.resize(mainGrid.getTileWidthPixels(),mainGrid.getTileHeightPixels());
+  //player1 = loadImage(player1File);
+  //player1.resize(mainGrid.getTileWidthPixels(),mainGrid.getTileHeightPixels());
    enemy1 = loadImage("images/target1.png");
    enemy1.resize(100,100);
     enemy2 = loadImage("images/target2.png");
