@@ -135,7 +135,7 @@ void keyPressed(){
   //check what key was pressed
   System.out.println("Key pressed: " + key); //keyCode gives you an integer for the key
 
-  //What to do when a key is pressed?
+  //What to do when a key is pressed? When the key is pressed the target will start moving in its's own way. 
   
   //set [W] key to move the player1 up & avoid Out-of-Bounds errors
   if(keyCode == 87){
@@ -144,7 +144,7 @@ void keyPressed(){
     GridLocation oldLoc = new GridLocation(player1Row, 0);
 
     //Erase image from previous location
-    //removeMark();
+    //removeMark(); 
 
     //change the field for player1Row
     player1Row--;
@@ -163,7 +163,8 @@ void mouseClicked(){
   }
 
   //what to do if clicked? (Make player1 jump back?)
-  
+  // For the clicking , when the player clicks on the target then the target will disappear 
+  //and the player will gain points to which the enemy will appear again in a different location---> loops
 
 
   //Toggle the animation on & off
