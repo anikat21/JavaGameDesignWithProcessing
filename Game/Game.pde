@@ -9,8 +9,8 @@
 
 //Title Bar
 private int msElapsed = 0;
-String titleText = "HorseChess";
-String extraText = "Who's Turn?";
+String titleText = " The Fate Of Lux Kingdom ";
+String extraText = " The Archery Academy Of Lumina";
 
 //Current Screens
 Screen currentScreen;
