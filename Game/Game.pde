@@ -25,13 +25,12 @@ String level1BgFile = "images/mode1.jpg";
 PImage target1;
 String target1File = "images/target1.png";
 int points = 0;
-
-PImage player1;   //Use PImage to display the image in a GridLocation
-String player1File = "images/x_wood.png";
-int player1Row = 3;
-int player1Col = 0;
+int target1Row = 3;
+int target1Col = 0;
 int health = 3;
 
+//Example objects
+Button b1 = new Button("rect", 400, 500, 100, 50, "GoToLevel2");
 AnimatedSprite enemySprite;
 
 
@@ -59,7 +58,6 @@ boolean doAnimation;
 
 //Variables to track the current Screen being displayed
 Screen currentScreen;
-World currentWorld;
 Grid currentGrid;
 private int msElapsed = 0;
 
@@ -83,20 +81,22 @@ void setup() {
   level2Bg = loadImage(level2BgFile);
   level2Bg.resize(800,600);
   endBg = loadImage(endBgFile);
-  endBg.resize(800,600);
+  endBg.resize(800,600);  
+  
+  
+  //------------------ OTHER GRID METHODS --------------------//
 
   //setup the screens/worlds/grids in the Game
   splashScreen = new Screen("splash", splashBg);
   level1Grid = new Grid("chessBoard", level1Bg, 6, 8);
-  level2World = new World("sky", level2Bg);
+  level2World = new World("sky", level2BgFile, 8.0, 0, 0); //moveable World constructor --> defines center & scale (x, scale, y)???
+  //level2World = new World("sky", level2Bg);   //simple World construtor
   endScreen = new World("end", endBg);
   currentScreen = splashScreen;
-
+  
   //setup the sprites  
-  player1 = loadImage(player1File);
-  player1.resize(level1Grid.getTileWidthPixels(),level1Grid.getTileHeightPixels());
-  //enemy1 = loadImage("images/target1.png");
-  //enemy1.resize(100,100);
+  target1 = loadImage(target1File);
+  target1.resize(level1Grid.getTileWidthPixels(),level1Grid.getTileHeightPixels());
   //enemy2 = loadImage("images/target2.png");
   //enemy2.resize(100,100);
   //enemy3 = loadImage("images/target3.png");
@@ -109,7 +109,11 @@ void setup() {
   System.out.println("Done adding sprites to level 1..");
   
   //LEVEL 2 SPRITE SETUP - WORLD
-  player2 = new Sprite(player2File, 0.5);
+  //player2 = new Sprite(player2File, 0.25);
+  //player2.moveTo(player2startX, player2startY);
+  // enemy = loadImage("images/articuno.png");
+  // enemy.resize(100,100);
+
   
   //Other Setup
   exampleAnimationSetup();
@@ -161,17 +165,8 @@ void keyPressed(){
   //KEYS FOR LEVEL1
   if(currentScreen == level1Grid){
 
-    //set [W] key to move the player1 up & avoid Out-of-Bounds errors
     if(keyCode == 87){
     
-      //Store old GridLocation
-      GridLocation oldLoc = new GridLocation(player1Row, player1Col);
-
-      //Erase image from previous location
-      //removeMark(); 
-
-      //change the field for player1Row
-      player1Row--;
     }
 
 
@@ -198,9 +193,22 @@ void mouseClicked(){
     System.out.println("Grid location: " + currentGrid.getGridLocation());
   }
 
-  //what to do if clicked? (Make player1 jump back?)
-  // For the clicking , when the player clicks on the target then the target will disappear 
-  //and the player will gain points to which the enemy will appear again in a different location---> loops
+  //what to do if clicked? Move target to a random location??
+
+   //KEYS FOR LEVEL1
+  if(currentScreen == level1Grid){
+
+    //check if the click was on the target's location??
+
+   
+      //Store old GridLocation
+      GridLocation oldLoc = new GridLocation(target1Row, target1Col);
+
+      //Erase image from previous location
+      
+      //change the field for the target's row and column
+      
+    }
 
 
   //Toggle the animation on & off
@@ -211,7 +219,6 @@ void mouseClicked(){
   }
 
 }
-
 
 
 
@@ -227,14 +234,15 @@ public void updateTitleBar(){
     //adjust the extra text as desired
   
   }
-
 }
 
 //method to update what is drawn on the screen each frame
 public void updateScreen(){
 
   //Update the Background of the current Screen
-  background(currentScreen.getBg());
+  if(currentScreen.getBg() != null){
+    background(currentScreen.getBg());
+  }
 
   //splashScreen update
   if(splashScreen.getScreenTime() > 3000 && splashScreen.getScreenTime() < 5000){
@@ -245,23 +253,29 @@ public void updateScreen(){
   if(currentScreen == level1Grid){
     currentGrid = level1Grid;
 
-    //Display the Player1 image
-    GridLocation player1Loc = new GridLocation(player1Row,0);
-    level1Grid.setTileImage(player1Loc, player1);
+    //Display the target1 image
+    GridLocation target1Loc = new GridLocation(target1Row, target1Col);
+    level1Grid.setTileImage(target1Loc, target1);
       
     //update other screen elements
     level1Grid.showSprites();
     level1Grid.showImages();
     level1Grid.showGridSprites();
 
-
+    //move to next level based on a button click
+    b1.show();
+    if(b1.isClicked()){
+      //currentScreen = level2World;
+    }
     
   }
 
   //level2World Updates
   else if(currentScreen == level2World){
-    currentWorld = level2World;
     
+    level2World.moveBgXY(-3.0, 0);
+    level2World.show();
+
     player2.show();
 
 
@@ -370,7 +384,7 @@ public void exampleAnimationSetup(){
 //example method that animates the horse Sprites
 public void checkExampleAnimation(){
   if(doAnimation){
-    exampleSprite.animateHorizontal(5.0, 1.0, true);
+    exampleSprite.animateHorizontal(5.0, 10.0, true);
     //System.out.println("animating!");
   }
 }
