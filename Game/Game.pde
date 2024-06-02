@@ -11,15 +11,13 @@
 String titleText = " The Fate Of Lux Kingdom ";
 String extraText = " The Archery Academy Of Lumina";
 
-//VARIABLES: Whole Game
 
-
-//VARIABLES: Splash Screen
+//Splash Screen Variables
 Screen splashScreen;
 String splashBgFile = "images/kingdom.jpg";
 PImage splashBg;
 
-//VARIABLES: Level1Grid Screen
+//Level1 Grid-Screen Variables
 Grid level1Grid;
 PImage level1Bg;
 String level1BgFile = "images/mode1.jpg";
@@ -30,25 +28,35 @@ int points = 0;
 int target1Row = 3;
 int target1Col = 0;
 int health = 3;
-AnimatedSprite walkingChick;
-Button b1 = new Button("rect", 650, 525, 100, 50, "GoToLevel2");
 
-//VARIABLES: Level2World Pixel-based Screen
+//Example objects
+Button b1 = new Button("rect", 400, 500, 100, 50, "GoToLevel2");
+AnimatedSprite enemySprite;
+
+
+//Level2 Pixel-based-Screen Variables
 World level2World;
 PImage level2Bg;
 String level2BgFile = "images/sky.jpg";
-Sprite player2; //Use Sprite for a pixel-based Location
+
+Sprite player2;   //Use PImage to display the image in a GridLocation
 String player2File = "images/zapdos.png";
 int player2startX = 50;
 int player2startY = 300;
 
-//VARIABLES: EndScreen
+
+//EndScreen variables
 World endScreen;
 PImage endBg;
 String endBgFile = "images/youwin.png";
 
 
-//VARIABLES: Tracking the current Screen being displayed
+//Whole Game Variables
+AnimatedSprite exampleSprite;
+boolean doAnimation;
+
+
+//Variables to track the current Screen being displayed
 Screen currentScreen;
 Grid currentGrid;
 private int msElapsed = 0;
@@ -59,64 +67,66 @@ private int msElapsed = 0;
 //Required Processing method that gets run once
 void setup() {
 
-  //SETUP: Match the screen size to the background image size
-  size(800,600);  //these will automatically be saved as width & height
-  imageMode(CORNER);    //Set Images to read coordinates at corners
-  //fullScreen();   //only use if not using a specfic bg image
+  //Match the screen size to the background image size
+  size(800,600);
   
-  //SETUP: Set the title on the title bar
+  //Set the title on the title bar
   surface.setTitle(titleText);
 
-  //SETUP: Load BG images used in all screens
+  //Load BG images used in all screens
   splashBg = loadImage(splashBgFile);
-  splashBg.resize(width, height);
+  splashBg.resize(800,600);
   level1Bg = loadImage(level1BgFile);
-  level1Bg.resize(width, height);
+  level1Bg.resize(800,600);
   level2Bg = loadImage(level2BgFile);
-  level2Bg.resize(width, height);
+  level2Bg.resize(800,600);
   endBg = loadImage(endBgFile);
-  endBg.resize(width, height);  
+  endBg.resize(800,600);  
+  
+  
+  //------------------ OTHER GRID METHODS --------------------//
 
-  //SETUP: Screens, Worlds, Grids
+  //setup the screens/worlds/grids in the Game
   splashScreen = new Screen("splash", splashBg);
   level1Grid = new Grid("chessBoard", level1Bg, 6, 8);
-  //level1Grid.startPrintingGridMarks();
   level2World = new World("sky", level2BgFile, 8.0, 0, 0); //moveable World constructor --> defines center & scale (x, scale, y)???
-  //level2World = new World("sky", level2Bg);   //non-moving World construtor
+  //level2World = new World("sky", level2Bg);   //simple World construtor
   endScreen = new World("end", endBg);
   currentScreen = splashScreen;
-
-  //SETUP: All Game objects
-
-
-  //SETUP: Level 1
+  
+  //setup the sprites  
   target1 = loadImage(target1File);
-  target1.resize(level1Grid.getTileWidth(),level1Grid.getTileHeight());
+  target1.resize(level1Grid.getTileWidthPixels(),level1Grid.getTileHeightPixels());
   //enemy2 = loadImage("images/target2.png");
   //enemy2.resize(100,100);
   //enemy3 = loadImage("images/target3.png");
   //enemy3.resize(100,100);
-  walkingChick = new AnimatedSprite("sprites/chick_walk.png", "sprites/chick_walk.json", 0.0, 0.0, 5.0);
-  level1Grid.setTileSprite(new GridLocation (5,5), walkingChick);
+  exampleAnimationSetup();
 
-  System.out.println("Done loading Level 1 ...");
+  //Adding pixel-based Animated Sprites to the world
+  // level1Grid.addSpriteCopyTo(exampleSprite);
+  level1Grid.printSprites();
+  System.out.println("Done adding sprites to level 1..");
   
-  //SETUP: Level 2
-  player2 = new Sprite(player2File, 0.25);
-  player2.moveTo(player2startX, player2startY);
+  //LEVEL 2 SPRITE SETUP - WORLD
+  //player2 = new Sprite(player2File, 0.25);
+  //player2.moveTo(player2startX, player2startY);
+  // enemy = loadImage("images/articuno.png");
+  // enemy.resize(100,100);
+
   
-  level2World.printWorldSprites();
-  System.out.println("Done loading Level 2 ...");
-  
-  //SETUP: Sound
+  //Other Setup
+  exampleAnimationSetup();
+
   // Load a soundfile from the /data folder of the sketch and play it back
   // song = new SoundFile(this, "sounds/Lenny_Kravitz_Fly_Away.mp3");
   // song.play();
   
+  imageMode(CORNER);    //Set Images to read coordinates at corners
+  //fullScreen();   //only use if not using a specfic bg image
   println("Game started...");
 
 } //end setup()
-
 
 //Required Processing method that automatically loops
 //(Anything drawn on the screen should be called from here)
@@ -148,7 +158,7 @@ void draw() {
 void keyPressed(){
 
   //check what key was pressed
-  System.out.println("\nKey pressed: " + keyCode); //key gives you a character for the key pressed
+  System.out.println("Key pressed: " + key); //keyCode gives you an integer for the key
 
   //What to do when a key is pressed?
   
@@ -178,7 +188,7 @@ void keyPressed(){
 void mouseClicked(){
   
   //check if click was successful
-  System.out.println("\nMouse was clicked at (" + mouseX + "," + mouseY + ")");
+  System.out.println("Mouse was clicked at (" + mouseX + "," + mouseY + ")");
   if(currentGrid != null){
     System.out.println("Grid location: " + currentGrid.getGridLocation());
   }
@@ -189,7 +199,7 @@ void mouseClicked(){
   if(currentScreen == level1Grid){
 
     //check if the click was on the target's location??
-        
+     
       //Store old GridLocation
       GridLocation oldLoc = new GridLocation(target1Row, target1Col);
 
@@ -200,6 +210,9 @@ void mouseClicked(){
     }
 
 
+  //Toggle the animation on & off
+  doAnimation = !doAnimation;
+  System.out.println("doAnimation: " + doAnimation);
   if(currentGrid != null){
     currentGrid.setMark("X",currentGrid.getGridLocation());
   }
@@ -225,20 +238,18 @@ public void updateTitleBar(){
 //method to update what is drawn on the screen each frame
 public void updateScreen(){
 
-  //UPDATE: Background of the current Screen
+  //Update the Background of the current Screen
   if(currentScreen.getBg() != null){
     background(currentScreen.getBg());
   }
 
-  //UPDATE: splashScreen
-  if(currentScreen == splashScreen && splashScreen.getScreenTime() > 3000 && splashScreen.getScreenTime() < 5000){
-    System.out.print("s");
+  //splashScreen update
+  if(splashScreen.getScreenTime() > 3000 && splashScreen.getScreenTime() < 5000){
     currentScreen = level1Grid;
   }
 
-  //UPDATE: level1Grid Screen
+  //level1Grid Screen Updates
   if(currentScreen == level1Grid){
-    System.out.print("1");
     currentGrid = level1Grid;
 
     //Display the target1 image
@@ -246,40 +257,31 @@ public void updateScreen(){
     level1Grid.setTileImage(target1Loc, target1);
       
     //update other screen elements
-    level1Grid.showGridImages();
+    level1Grid.showSprites();
+    level1Grid.showImages();
     level1Grid.showGridSprites();
-    level1Grid.showWorldSprites();
 
     //move to next level based on a button click
     b1.show();
     if(b1.isClicked()){
-      System.out.println("\nButton Clicked");
-      currentScreen = level2World;
+      //currentScreen = level2World;
     }
-  
+    
   }
-  
-  //UPDATE: level2World Scren
-  if(currentScreen == level2World){
-    System.out.print("2");
-    currentGrid = null;
+
+  //level2World Updates
+  else if(currentScreen == level2World){
     
     level2World.moveBgXY(-3.0, 0);
     level2World.show();
 
     player2.show();
 
-    level2World.showWorldSprites();
 
   }
 
-  //UPDATE: End Screen
-  // if(currentScreen == endScreen){
-
-  // }
-
-  //UPDATE: Any Screen
-
+  //Updtes for any Screen
+  checkExampleAnimation();
 
 
 }
@@ -369,4 +371,19 @@ public void endGame(){
     //Show any end imagery
     currentScreen = endScreen;
 
+}
+
+//example method that creates 1 horse run along the screen
+public void exampleAnimationSetup(){  
+  int i = 2;
+  exampleSprite = new AnimatedSprite("sprites/horse_run.png", "sprites/horse_run.json", 50.0, i*75.0);
+  //exampleSprite.resize(200,200);
+}
+
+//example method that animates the horse Sprites
+public void checkExampleAnimation(){
+  if(doAnimation){
+    exampleSprite.animateHorizontal(5.0, 10.0, true);
+    //System.out.println("animating!");
+  }
 }
