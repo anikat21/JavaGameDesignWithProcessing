@@ -199,8 +199,7 @@ void mouseClicked(){
   if(currentScreen == level1Grid){
 
     //check if the click was on the target's location??
-
-   
+        
       //Store old GridLocation
       GridLocation oldLoc = new GridLocation(target1Row, target1Col);
 
