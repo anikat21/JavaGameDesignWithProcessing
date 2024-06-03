@@ -34,10 +34,10 @@ Button b1 = new Button("rect", 650, 525, 100, 50, "GoToLevel2");
 World level2World;
 PImage level2Bg;
 String level2BgFile = "images/mode2.jpg";
-Sprite player2; //Use Sprite for a pixel-based Location
-String player2File = "images/zapdos.png";
-int player2startX = 50;
-int player2startY = 300;
+PImage target2; //Use Sprite for a pixel-based Location
+String target2File = "images/zapdos.png";
+int target2startX = 50;
+int target2startY = 300;
 
 
 //VARIABLES: EndScreen
@@ -97,8 +97,8 @@ void setup() {
   System.out.println("Done loading Level 1 ...");
   
   //SETUP: Level 2
-  player2 = new Sprite(player2File, 0.25);
-  player2.moveTo(player2startX, player2startY);
+  target2 = new Sprite(target2File, 0.25);
+  target2.moveTo(target2startX, target2startY);
   
   level2World.printWorldSprites();
   System.out.println("Done loading Level 2 ...");
@@ -184,10 +184,17 @@ void mouseClicked(){
    //KEYS FOR LEVEL1
   if(currentScreen == level1Grid){
 
-    //check if the click was on the target's location??
-
       //Store old GridLocation
       GridLocation oldLoc = new GridLocation(target1Row, target1Col);
+
+
+
+    //check if the click was on the target's location??
+if (oldLoc.equals(level1Grid.getGridLocation)){
+  target1Row += 9;
+  target1Col +=  15; 
+}
+
 
       //Erase image from previous location
       
@@ -261,7 +268,7 @@ public void updateScreen(){
     level2World.moveBgXY(-3.0, 0);
     level2World.show();
 
-    player2.show();
+    target2.show();
 
 
   }
