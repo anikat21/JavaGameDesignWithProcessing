@@ -96,7 +96,7 @@ void setup() {
   
   //setup the sprites  
   target1 = loadImage(target1File);
-  target1.resize(level1Grid.getTileWidthPixels(), level1Grid.getTileHeightPixels());
+  target1.resize(level1Grid.getTileWidth(), level1Grid.getTileHeight());
   //enemy2 = loadImage("images/target2.png");
   //enemy2.resize(100,100);
   //enemy3 = loadImage("images/target3.png");
