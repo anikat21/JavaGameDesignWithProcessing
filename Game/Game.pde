@@ -13,6 +13,9 @@ String extraText = " The Archery Academy Of Lumina";
 
 //VARIABLES: Whole Game
 
+//VARIABLES: Whole Game
+AnimatedSprite runningHorse;
+boolean doAnimation;
 
 //VARIABLES: Splash Screen
 Screen splashScreen;
@@ -34,9 +37,11 @@ AnimatedSprite walkingChick;
 Button b1 = new Button("rect", 650, 525, 100, 50, "GoToLevel2");
 
 //VARIABLES: Level2World Pixel-based Screen
+//VARIABLES: Level2World Pixel-based Screen
 World level2World;
 PImage level2Bg;
 String level2BgFile = "images/sky.jpg";
+Sprite player2; //Use Sprite for a pixel-based Location
 Sprite player2; //Use Sprite for a pixel-based Location
 String player2File = "images/zapdos.png";
 int player2startX = 50;
@@ -63,10 +68,16 @@ void setup() {
   size(800,600);  //these will automatically be saved as width & height
   imageMode(CORNER);    //Set Images to read coordinates at corners
   //fullScreen();   //only use if not using a specfic bg image
+  //SETUP: Match the screen size to the background image size
+  size(800,600);  //these will automatically be saved as width & height
+  imageMode(CORNER);    //Set Images to read coordinates at corners
+  //fullScreen();   //only use if not using a specfic bg image
   
+  //SETUP: Set the title on the title bar
   //SETUP: Set the title on the title bar
   surface.setTitle(titleText);
 
+  //SETUP: Load BG images used in all screens
   //SETUP: Load BG images used in all screens
   splashBg = loadImage(splashBgFile);
   splashBg.resize(width, height);
@@ -259,7 +270,7 @@ public void updateScreen(){
   
   }
   
-  //UPDATE: level2World Scren
+  //UPDATE: level2World Screen
   if(currentScreen == level2World){
     System.out.print("2");
     currentGrid = null;
