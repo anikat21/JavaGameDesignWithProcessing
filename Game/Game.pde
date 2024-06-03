@@ -33,7 +33,7 @@ Button b1 = new Button("rect", 650, 525, 100, 50, "GoToLevel2");
 //VARIABLES: Level2World Pixel-based Screen
 World level2World;
 PImage level2Bg;
-String level2BgFile = "images/sky.jpg";
+String level2BgFile = "images/mode2.jpg";
 Sprite player2; //Use Sprite for a pixel-based Location
 String player2File = "images/zapdos.png";
 int player2startX = 50;
