@@ -96,6 +96,7 @@ void setup() {
   splashScreen = new Screen("menu", splashBg);
   level1Grid = new Grid("academy", level1Bg, 6, 8);
   level2Grid = new Grid("dungeon", level2Bg, 6, 8);
+  
   endScreen = new World("end", endBg);
   currentScreen = splashScreen;
   
@@ -180,6 +181,8 @@ void keyPressed(){
     currentScreen = level1Grid;
   } else if(key == '2'){
     currentScreen = level2Grid;
+  } else if(key == '3'){
+    currentScreen = level3Grid;
   }
 
 
@@ -253,6 +256,7 @@ public void updateScreen(){
   //UPDATE: level1Grid Screen
   if(currentScreen == level1Grid){
     currentGrid = level1Grid;
+    System.out.print("1");
 
     //Display the target1 image
     GridLocation target1Loc = new GridLocation(target1Row, target1Col);
@@ -285,18 +289,18 @@ public void updateScreen(){
     level2Grid.showImages();
     
     //move to next level based on a button click
-    b2.show();
-    if(b2.isClicked()){
-      System.out.println("\nButton Clicked");
-      currentScreen = level3Grid;
-    }
+    // b2.show();
+    // if(b2.isClicked()){
+    //   System.out.println("\nButton Clicked");
+    //   currentScreen = level3Grid;
+    // }
 
   }
 
   //UPDATE: level3Grid Screen
   if(currentScreen == level3Grid){
     System.out.print("3");
-    currentGrid = null;
+    currentGrid = level3Grid;
 
   }
 
