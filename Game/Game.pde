@@ -16,6 +16,14 @@ Screen splashScreen;
 String splashBgFile = "images/kingdom.jpg";
 PImage splashBg;
 
+//VARIABLES: Menu Screen
+Screen menuScreen;
+String menuBgFile = "images/kingdom.jpg";
+PImage menuBg;
+Button b1 = new Button("rect", 450, 525, 100, 50, "EASY");
+Button b2 = new Button("rect", 550, 525, 100, 50, "MODERATE");
+Button b3 = new Button("rect", 650, 525, 100, 50, "HARD");
+
 //VARIABLES: Level1Grid Screen
 Grid level1Grid;
 PImage level1Bg;
@@ -27,8 +35,7 @@ int points = 0;
 int target1Row = 3;
 int target1Col = 0;
 int health = 3;
-AnimatedSprite walkingChick;
-Button b1 = new Button("rect", 650, 525, 100, 50, "GoToLevel2");
+
 
 //VARIABLES: Level2Grid Pixel-based Screen
 Grid level2Grid;
@@ -41,7 +48,6 @@ int points2 = 0;
 int target2Row = 3;
 int target2Col = 0;
 int health2 = 3;
-Button b2 = new Button("rect", 650, 525, 100, 50, "GoToLevel3");
 
 //VARIABLES: Level3Grid Pixel-based Screen
 Grid level3Grid;
@@ -54,7 +60,6 @@ int points3 = 0;
 int target3Row = 3;
 int target3Col = 0;
 int health3 = 3;
-Button b3 = new Button("rect", 650, 525, 100, 50, "GoToLevel3");
 
 //VARIABLES: EndScreen
 World endScreen;
@@ -66,6 +71,8 @@ String endBgFile = "images/youwin.png";
 Screen currentScreen;
 Grid currentGrid;
 private int msElapsed = 0;
+long startTime = 0;
+long remainingTime = 20000;
 
 
 //------------------ REQUIRED PROCESSING METHODS --------------------//
@@ -83,42 +90,43 @@ void setup() {
 
   //SETUP: Load BG images used in all screens
   splashBg = loadImage(splashBgFile);
-  splashBg.resize(800,600);
+  splashBg.resize(width, height);
+  menuBg = loadImage(splashBgFile);
+  menuBg.resize(width, height);
   level1Bg = loadImage(level1BgFile);
-  level1Bg.resize(800,600);
+  level1Bg.resize(width, height);
   level2Bg = loadImage(level2BgFile);
-  level2Bg.resize(800,600);
+  level2Bg.resize(width, height);
+  level3Bg = loadImage(level3BgFile);
+  level3Bg.resize(width, height);
   endBg = loadImage(endBgFile);
-  endBg.resize(width, height);  
+  endBg.resize(width, height);
   
   
   //SETUP: Screens, Worlds, Grids
-  splashScreen = new Screen("menu", splashBg);
+  splashScreen = new Screen("splash", splashBg);
+  menuScreen = new Screen("menu", menuBg);
   level1Grid = new Grid("academy", level1Bg, 6, 8);
   level2Grid = new Grid("dungeon", level2Bg, 6, 8);
-  
+  level3Grid = new Grid("boss", level3Bg, 6, 8);
   endScreen = new World("end", endBg);
   currentScreen = splashScreen;
   
   //SETUP: Level 1
   target1 = loadImage(target1File);
   target1.resize(level1Grid.getTileWidth(), level1Grid.getTileHeight());
-  //enemy2 = loadImage("images/target2.png");
-  //enemy2.resize(100,100);
-  //enemy3 = loadImage("images/target3.png");
-  //enemy3.resize(100,100);
-  walkingChick = new AnimatedSprite("sprites/chick_walk.png", "sprites/chick_walk.json", 0.0, 0.0, 5.0);
-  level1Grid.setTileSprite(new GridLocation (5,5), walkingChick);
-
   System.out.println("Done loading Level 1 ...");
   
   //SETUP: Level 2
   target2 = loadImage(target2File);
   target2.resize(level2Grid.getTileWidth(), level2Grid.getTileHeight());
-
-  //level2World.printWorldSprites();
   System.out.println("Done loading Level 2 ...");
   
+  //SETUP: Level 3
+  target3 = loadImage(target3File);
+  target3.resize(level2Grid.getTileWidth(), level3Grid.getTileHeight());
+  System.out.println("Dont loading level 3 ...");
+
   //SETUP: Sound
   // Load a soundfile from the /data folder of the sketch and play it back
   // song = new SoundFile(this, "sounds/Lenny_Kravitz_Fly_Away.mp3");
@@ -138,13 +146,13 @@ void draw() {
   updateScreen();
 
   //simple timing handling
-  if (msElapsed % 300 == 0) {
-    //sprite handling
-    populateSprites();
-    moveSprites();
-  }
-  msElapsed +=100;
-  currentScreen.pause(100);
+  // if (msElapsed % 300 == 0) {
+  //   //sprite handling
+  //   populateSprites();
+  //   moveSprites();
+  // }
+  msElapsed +=10;
+  currentScreen.pause(10);
 
   //check for end of game
   if(isGameOver()){
@@ -183,8 +191,9 @@ void keyPressed(){
     currentScreen = level2Grid;
   } else if(key == '3'){
     currentScreen = level3Grid;
+  } else if(key == 'm'){
+    currentScreen = menuScreen;
   }
-
 
 }
 
@@ -192,34 +201,48 @@ void keyPressed(){
 void mouseClicked(){
   
   //check if click was successful
-  System.out.println("Mouse was clicked at (" + mouseX + "," + mouseY + ")");
-  if(currentGrid != null){
-    System.out.println("Grid location: " + currentGrid.getGridLocation());
-  }
+  // System.out.println("Mouse was clicked at (" + mouseX + "," + mouseY + ")");
+  // if(currentGrid != null){
+  //   System.out.println("Grid location: " + currentGrid.getMouseGridLocation());
+  // }
 
   //what to do if clicked? Move target to a random location??
 
    //KEYS FOR LEVEL1
   if(currentScreen == level1Grid){
 
+    //Store target GridLocation
+    GridLocation targetLoc = new GridLocation(target1Row, target1Col);
+
     //check if the click was on the target's location??
-
-      //Store old GridLocation
-      GridLocation oldLoc = new GridLocation(target1Row, target1Col);
-
-      //Erase image from previous location
+    if (targetLoc.equals(level1Grid.getMouseGridLocation())){
       
-      //change the field for the target's row and column
+      //Erase image from previous location
+      level1Grid.clearTileImage(targetLoc);
 
+      //change the field for the target's row and column
+      target1Row = (int) (Math.random()*level1Grid.getNumRows());
+      target1Col = (int) (Math.random()*level1Grid.getNumCols());
 
       //successful click, then add point
+      points++;
+
+      //initialize new timer
+      startTime = currentScreen.getScreenTime();
+    }
+
+
+
+
+
+
 
       
     }
 
 
   if(currentGrid != null){
-    currentGrid.setMark("X",currentGrid.getGridLocation());
+    currentGrid.setMark("X",currentGrid.getMouseGridLocation());
   }
 
 }
@@ -233,9 +256,7 @@ public void updateTitleBar(){
 
   if(!isGameOver()) {
     //set the title each loop
-    surface.setTitle(titleText + "    " + extraText + "    Total Points: " + points);
-
-    //adjust the extra text as desired
+    surface.setTitle(titleText +  "    Total Points: " + points + " Time: " + remainingTime);
   
   }
 }
@@ -249,31 +270,44 @@ public void updateScreen(){
   }
 
   //UPDATE: SplashScreen
-  if(splashScreen.getScreenTime() > 3000 && splashScreen.getScreenTime() < 5000){
-    currentScreen = level1Grid;
+  if( currentScreen == splashScreen){
+
+    if(splashScreen.getScreenTime() > 3000 && splashScreen.getScreenTime() < 5000){
+      currentScreen = menuScreen;
+    }
   }
+
+  //UPDATE: MenuScreen
+  if(currentScreen == menuScreen){
+
+    b1.show();
+    b2.show();
+    b3.show();
+
+    if(b1.isClicked()){
+      currentScreen = level1Grid;
+    } else if (b2.isClicked()){
+      currentScreen = level2Grid;
+    } else if (b3.isClicked()){
+      currentScreen = level3Grid;
+    }
+  }
+
 
   //UPDATE: level1Grid Screen
   if(currentScreen == level1Grid){
-    currentGrid = level1Grid;
     System.out.print("1");
+    currentGrid = level1Grid;
+
+    //update timer target1
+    remainingTime = 20*1000-(currentScreen.getScreenTime()-startTime);
 
     //Display the target1 image
     GridLocation target1Loc = new GridLocation(target1Row, target1Col);
     level1Grid.setTileImage(target1Loc, target1);
       
     //update other screen elements
-    level1Grid.showSprites();
     level1Grid.showImages();
-    level1Grid.showGridSprites();
-
-    //move to next level based on a button click
-    b1.show();
-    if(b1.isClicked()){
-      System.out.println("\nButton Clicked");
-      currentScreen = level2Grid;
-    }
-    
   }
   
   //UPDATE: level2Grid Screen
@@ -282,7 +316,7 @@ public void updateScreen(){
     currentGrid = level2Grid;
 
     //Display the target2 image
-    GridLocation target2Loc = new GridLocation(target2Row, target1Col);
+    GridLocation target2Loc = new GridLocation(target2Row, target2Col);
     level2Grid.setTileImage(target2Loc, target2);
 
     //update other screen elements
@@ -301,7 +335,13 @@ public void updateScreen(){
   if(currentScreen == level3Grid){
     System.out.print("3");
     currentGrid = level3Grid;
+    
+    //Display the target3 image
+    GridLocation target3Loc = new GridLocation(target3Row, target3Col);
+    level3Grid.setTileImage(target3Loc, target3);
 
+    //update other screen elements
+    level3Grid.showImages();
   }
 
 
