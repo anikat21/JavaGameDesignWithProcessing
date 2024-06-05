@@ -194,6 +194,10 @@ void mouseClicked(){
       //Erase image from previous location
       
       //change the field for the target's row and column
+
+
+      //successful click, then add point
+
       
     }
 
