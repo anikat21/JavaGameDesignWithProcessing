@@ -30,17 +30,10 @@ int health = 3;
 AnimatedSprite walkingChick;
 Button b1 = new Button("rect", 650, 525, 100, 50, "GoToLevel2");
 
-//VARIABLES: Level2World Pixel-based Screen
+//VARIABLES: Level2Grid Pixel-based Screen
 Grid level2Grid;
 PImage level2Bg;
 String level2BgFile = "images/mode2.jpg";
-<<<<<<< HEAD
-PImage target2; //Use Sprite for a pixel-based Location
-String target2File = "images/zapdos.png";
-int target2startX = 50;
-int target2startY = 300;
-=======
->>>>>>> 2a3a5e88c954ebe719ba360814875aab92e7bf01
 
 PImage target2;
 String target2File = "images/target2.png";
@@ -49,6 +42,19 @@ int target2Row = 3;
 int target2Col = 0;
 int health2 = 3;
 Button b2 = new Button("rect", 650, 525, 100, 50, "GoToLevel3");
+
+//VARIABLES: Level3Grid Pixel-based Screen
+Grid level3Grid;
+PImage level3Bg;
+String level3BgFile = "images/mode3.jpg";
+
+PImage target3;
+String target3File = "images/target3.png";
+int points3 = 0;
+int target3Row = 3;
+int target3Col = 0;
+int health3 = 3;
+Button b3 = new Button("rect", 650, 525, 100, 50, "GoToLevel3");
 
 //VARIABLES: EndScreen
 World endScreen;
@@ -106,17 +112,10 @@ void setup() {
   System.out.println("Done loading Level 1 ...");
   
   //SETUP: Level 2
-<<<<<<< HEAD
-  target2 = new Sprite(target2File, 0.25);
-  target2.moveTo(target2startX, target2startY);
-  
-  level2World.printWorldSprites();
-=======
   target2 = loadImage(target2File);
   target2.resize(level2Grid.getTileWidth(), level2Grid.getTileHeight());
 
   //level2World.printWorldSprites();
->>>>>>> 2a3a5e88c954ebe719ba360814875aab92e7bf01
   System.out.println("Done loading Level 2 ...");
   
   //SETUP: Sound
@@ -200,17 +199,10 @@ void mouseClicked(){
    //KEYS FOR LEVEL1
   if(currentScreen == level1Grid){
 
+    //check if the click was on the target's location??
+
       //Store old GridLocation
       GridLocation oldLoc = new GridLocation(target1Row, target1Col);
-
-
-
-    //check if the click was on the target's location??
-if (oldLoc.equals(level1Grid.getGridLocation)){
-  target1Row += 9;
-  target1Col +=  15; 
-}
-
 
       //Erase image from previous location
       
@@ -280,22 +272,34 @@ public void updateScreen(){
     
   }
   
-  //UPDATE: level2World Screen
+  //UPDATE: level2Grid Screen
   if(currentScreen == level2Grid){
     System.out.print("2");
-    currentGrid = null;
+    currentGrid = level2Grid;
+
+    //Display the target2 image
+    GridLocation target2Loc = new GridLocation(target2Row, target1Col);
+    level2Grid.setTileImage(target2Loc, target2);
+
+    //update other screen elements
+    level2Grid.showImages();
     
-    //level2World.moveBgXY(-3.0, 0);
-    //level2World.show();
-
-<<<<<<< HEAD
-    target2.show();
-=======
-    //player2.show();
->>>>>>> 2a3a5e88c954ebe719ba360814875aab92e7bf01
-
+    //move to next level based on a button click
+    b2.show();
+    if(b2.isClicked()){
+      System.out.println("\nButton Clicked");
+      currentScreen = level3Grid;
+    }
 
   }
+
+  //UPDATE: level3Grid Screen
+  if(currentScreen == level3Grid){
+    System.out.print("3");
+    currentGrid = null;
+
+  }
+
 
   //UPDATE: End Screen
   // if(currentScreen == endScreen){
