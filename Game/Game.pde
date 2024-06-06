@@ -13,12 +13,12 @@ String extraText = " The Archery Academy Of Lumina";
 
 //VARIABLES: Splash Screen
 Screen splashScreen;
-String splashBgFile = "images/kingdom.jpg";
+String splashBgFile = "images/test.jpg";
 PImage splashBg;
 
 //VARIABLES: Menu Screen
 Screen menuScreen;
-String menuBgFile = "images/kingdom.jpg";
+String menuBgFile = "images/menu.jpg";
 PImage menuBg;
 Button b1 = new Button("rect", 450, 525, 100, 50, "EASY");
 Button b2 = new Button("rect", 550, 525, 100, 50, "MODERATE");
@@ -91,7 +91,7 @@ void setup() {
   //SETUP: Load BG images used in all screens
   splashBg = loadImage(splashBgFile);
   splashBg.resize(width, height);
-  menuBg = loadImage(splashBgFile);
+  menuBg = loadImage(menuBgFile);
   menuBg.resize(width, height);
   level1Bg = loadImage(level1BgFile);
   level1Bg.resize(width, height);
@@ -277,7 +277,7 @@ public void updateScreen(){
     }
   }
 
-  //UPDATE: MenuScreen
+  //UPDATE: Screen
   if(currentScreen == menuScreen){
 
     b1.show();
@@ -321,14 +321,6 @@ public void updateScreen(){
 
     //update other screen elements
     level2Grid.showImages();
-    
-    //move to next level based on a button click
-    // b2.show();
-    // if(b2.isClicked()){
-    //   System.out.println("\nButton Clicked");
-    //   currentScreen = level3Grid;
-    // }
-
   }
 
   //UPDATE: level3Grid Screen
