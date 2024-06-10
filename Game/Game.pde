@@ -217,6 +217,15 @@ void mouseClicked(){
     //Store target GridLocation
     GridLocation targetLoc = new GridLocation(target1Row, target1Col);
 
+ if(remainingTime <=0 ){
+  //Erase image from previous location
+      level1Grid.clearTileImage(targetLoc);
+
+      //change the field for the target's row and column
+      target1Row = (int) (Math.random()*level1Grid.getNumRows());
+      target1Col = (int) (Math.random()*level1Grid.getNumCols());
+
+ }
     //check if the click was on the target's location??
     if (targetLoc.equals(level1Grid.getMouseGridLocation())){
       
