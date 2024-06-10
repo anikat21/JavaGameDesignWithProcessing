@@ -46,7 +46,7 @@ String level2BgFile = "images/mode2.jpg";
 PImage target2;
 String target2File = "images/target2.png";
 int points2 = 0;
-int targetScore = 200;
+int targetScore2 = 200;
 int target2Row = 3;
 int target2Col = 0;
 int health2 = 3;
