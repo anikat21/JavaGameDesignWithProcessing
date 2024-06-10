@@ -230,16 +230,55 @@ void mouseClicked(){
       //initialize new timer
       startTime = currentScreen.getScreenTime();
     }
+  }
 
+  //KEYS FOR LEVEL2
+  if(currentScreen == level2Grid){
 
+    //Store target GridLocation
+    GridLocation targetLoc2 = new GridLocation(target2Row, target2Col);
 
-
-
-
-
+    //check if the click was on the target's location??
+    if (targetLoc2.equals(level2Grid.getMouseGridLocation())){
       
-    }
+      //Erase image from previous location
+      level2Grid.clearTileImage(targetLoc2);
 
+      //change the field for the target's row and column
+      target2Row = (int) (Math.random()*level2Grid.getNumRows());
+      target2Col = (int) (Math.random()*level2Grid.getNumCols());
+
+      //successful click, then add point
+      points2++;
+
+      //initialize new timer
+      startTime = currentScreen.getScreenTime();
+    }
+  }
+
+  //KEYS FOR LEVEL3
+  if(currentScreen == level3Grid){
+
+    //Store target GridLocation
+    GridLocation targetLoc3 = new GridLocation(target3Row, target3Col);
+
+    //check if the click was on the target's location??
+    if (targetLoc3.equals(level3Grid.getMouseGridLocation())){
+      
+      //Erase image from previous location
+      level3Grid.clearTileImage(targetLoc3);
+
+      //change the field for the target's row and column
+      target3Row = (int) (Math.random()*level3Grid.getNumRows());
+      target3Col = (int) (Math.random()*level3Grid.getNumCols());
+
+      //successful click, then add point
+      points3++;
+
+      //initialize new timer
+      startTime = currentScreen.getScreenTime();
+    }
+  }
 
   if(currentGrid != null){
     currentGrid.setMark("X",currentGrid.getMouseGridLocation());
