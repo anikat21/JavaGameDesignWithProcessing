@@ -216,7 +216,7 @@ void mouseClicked(){
 
     //Store target GridLocation
     GridLocation targetLoc = new GridLocation(target1Row, target1Col);
-
+// Limit time
  if(remainingTime <=0 ){
   //Erase image from previous location
       level1Grid.clearTileImage(targetLoc);
