@@ -351,7 +351,7 @@ public void updateScreen(){
     currentGrid = level1Grid;
 
     //update timer target1
-    remainingTime = 20*1000-(currentScreen.getScreenTime()-startTime);
+    remainingTime = 20*100-(currentScreen.getScreenTime()-startTime);
 
     //Display the target1 image
     GridLocation target1Loc = new GridLocation(target1Row, target1Col);
