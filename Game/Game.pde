@@ -1,9 +1,10 @@
+import processing.sound.*;
+
 /* Game Class Starter File
  * Authors: Anika Adity & Naomi Santos Fernandez & Anika Tasmin
  * Last Edit: 5/22/2024
  */
 
-//import processing.sound.*;
 
 //------------------ GAME VARIABLES --------------------//
 
@@ -36,6 +37,9 @@ int targetScore= 10;
 int target1Row = 3;
 int target1Col = 0;
 int health = 3;
+
+// level 1 sound 
+SoundFile file;
 
 
 //VARIABLES: Level2Grid Pixel-based Screen
@@ -106,6 +110,7 @@ void setup() {
   imageMode(CORNER);    //Set Images to read coordinates at corners
   //fullScreen();   //only use if not using a specfic bg image
   
+  
   //SETUP: Set the title on the title bar
   surface.setTitle(titleText);
 
@@ -162,6 +167,11 @@ void setup() {
   // Load a soundfile from the /data folder of the sketch and play it back
   // song = new SoundFile(this, "sounds/Lenny_Kravitz_Fly_Away.mp3");
   // song.play();
+  
+    // Load a soundfile from the /data folder of the sketch and play it back
+  file = new SoundFile(this, "sounds/level1.mp3");
+  file.play();
+
   
   imageMode(CORNER);    //Set Images to read coordinates at corners
   //fullScreen();   //only use if not using a specfic bg image
@@ -448,12 +458,13 @@ public void updateScreen(){
 
     if (targetCount == targetScore2){
 
-      if (points2 == targetScore2){
-        currentScreen = level2Post;
+      if (points2== targetScore2){
+      currentScreen = level2Post;
+      targetCount = 0;
+
       }
-      else { 
-        currentScreen = level4Post;
-      }
+      else { currentScreen = level4Post;
+      targetCount = 0;}
     }
   }
 
@@ -487,8 +498,10 @@ public void updateScreen(){
 
       if (points== targetScore3){
       currentScreen = level5Post;
+      targetCount = 0;
       }
-      else { currentScreen = level6Post;}
+      else { currentScreen = level6Post;
+      targetCount = 0;}
     }
   }
 
