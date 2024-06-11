@@ -295,7 +295,7 @@ public void updateTitleBar(){
 
   if(!isGameOver()) {
     //set the title each loop
-    surface.setTitle(titleText +  "    Total Points: " + points + " Time: " + remainingTime);
+    surface.setTitle(titleText +  "    Total Points: " + points + "     Time: " + remainingTime);
   
   }
 }
@@ -339,7 +339,7 @@ public void updateScreen(){
     currentGrid = level1Grid;
 
     //update timer target1
-    remainingTime = 20*1000-(currentScreen.getScreenTime()-startTime);
+    remainingTime = 2*1000-(currentScreen.getScreenTime()-startTime);
 
     //Display the target1 image
     GridLocation target1Loc = new GridLocation(target1Row, target1Col);
@@ -385,76 +385,6 @@ public void updateScreen(){
 
 
 
-}
-
-//Method to populate enemies or other sprites on the screen
-public void populateSprites(){
-
-  //What is the index for the last column?
-  
-
-  //Loop through all the rows in the last column
-
-    //Generate a random number
-
-
-    //10% of the time, decide to add an enemy image to a Tile
-    
-
-}
-
-//Method to move around the enemies/sprites on the screen
-public void moveSprites(){
-
-//Loop through all of the rows & cols in the grid
-
-      //Store the current GridLocation
-
-      //Store the next GridLocation
-
-      //Check if the current tile has an image that is not player1      
-
-
-        //Get image/sprite from current location
-          
-
-        //CASE 1: Collision with player1
-
-
-        //CASE 2: Move enemy over to new location
-
-
-        //Erase image/sprite from old location
-
-        //System.out.println(loc + " " + grid.hasTileImage(loc));
-
-          
-      //CASE 3: Enemy leaves screen at first column
-
-}
-
-//Method to check if there is a collision between Sprites on the Screen
-public boolean checkCollision(GridLocation loc, GridLocation nextLoc){
-
-  //Check what image/sprite is stored in the CURRENT location
-  // PImage image = grid.getTileImage(loc);
-  // AnimatedSprite sprite = grid.getTileSprite(loc);
-
-  //if empty --> no collision
-
-  //Check what image/sprite is stored in the NEXT location
-
-  //if empty --> no collision
-
-  //check if enemy runs into player
-
-    //clear out the enemy if it hits the player (using cleartTileImage() or clearTileSprite() from Grid class)
-
-    //Update status variable
-
-  //check if a player collides into enemy
-
-  return false; //<--default return
 }
 
 //method to indicate when the main game is over
