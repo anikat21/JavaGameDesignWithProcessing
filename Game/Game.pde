@@ -317,7 +317,19 @@ public void updateTitleBar(){
 
   if(!isGameOver()) {
     //set the title each loop
-    surface.setTitle(titleText +  "    Total Points: " + points + " Time: " + remainingTime);
+     surface.setTitle(titleText +  "    Total Points XP "  + " Time To Play " );
+   
+  
+    if (currentScreen == level1Grid ){
+     surface.setTitle(titleText +  "    Total Points: " + points + " Time: " + remainingTime);
+    }
+    if ( currentScreen == level2Grid ){ 
+     surface.setTitle(titleText +  "    Total Points: " + points2 + " Time: " + remainingTime);
+    }
+    if ( currentScreen== level3Grid ){
+       surface.setTitle(titleText +  "    Total Points: " + points3 + " Time: " + remainingTime);
+  
+    }
   
   }
 }
