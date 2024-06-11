@@ -65,10 +65,16 @@ int target3Col = 0;
 int health3 = 3;
 
 
-//
-Screen level1Post; 
+//Result Splash Screens (For the plot)
+Screen successLvl1;
+PImage successLvl1Bg;
+String successLvl1BgFile = "images/level1success.jpg";
+
+Screen failLvl1;
+PImage failLvl1Bg;
+String failLvl1BgFile = "images/level1fail.jpg";
+
 Screen level2Post;
-Screen level3Post;
 Screen level4Post;
 Screen level5Post; 
 Screen level6Post;
@@ -116,13 +122,17 @@ void setup() {
   level3Bg.resize(width, height);
   endBg = loadImage(endBgFile);
   endBg.resize(width, height);
-  
+
+  successLvl1Bg = loadImage(successLvl1BgFile);
+  successLvl1Bg.resize(width, height);
+  failLvl1Bg = loadImage(failLvl1BgFile);
+  failLvl1Bg.resize(width, height);
   
   //SETUP: Screens, Worlds, Grids
   splashScreen = new Screen("splash", splashBg);
-  level1Post = new Screen("intro School", null);
+  successLvl1 = new Screen("intro School", successLvl1Bg);
   level2Post = new Screen("intro1Boss", null);
-  level3Post = new Screen("Return1", null);
+  failLvl1 = new Screen("Return1", failLvl1Bg);
   level4Post = new Screen("Return2", null);
   level5Post = new Screen("Final9Boss", null);
   level6Post = new Screen("Return3", null);
@@ -272,7 +282,8 @@ void mouseClicked(){
 
       //successful click, then add point
       points2++;
-targetCount++; 
+      targetCount++;
+
       //initialize new timer
       startTime = currentScreen.getScreenTime();
     }
@@ -321,7 +332,7 @@ public void updateTitleBar(){
    
   
     if (currentScreen == level1Grid ){
-     surface.setTitle(titleText +  "    Total Points: " + points + " Time: " + remainingTime);
+     surface.setTitle(titleText +  "    Total Points: " + points + " Time: " + (float) (remainingTime)/1000);
     }
     if ( currentScreen == level2Grid ){ 
      surface.setTitle(titleText +  "    Total Points: " + points2 + " Time: " + remainingTime);
@@ -343,14 +354,14 @@ public void updateScreen(){
   }
 
   //UPDATE: SplashScreen
-  if( currentScreen == splashScreen){
+  if(currentScreen == splashScreen){
 
     if(splashScreen.getScreenTime() > 3000 && splashScreen.getScreenTime() < 5000){
       currentScreen = menuScreen;
     }
   }
 
-  //UPDATE: Screen
+  //UPDATE: Menu Screen
   if(currentScreen == menuScreen){
 
     b1.show();
@@ -367,7 +378,6 @@ public void updateScreen(){
     }
   }
 
-
   //UPDATE: level1Grid Screen
   if(currentScreen == level1Grid){
     System.out.print("1");
@@ -378,8 +388,8 @@ public void updateScreen(){
 
     GridLocation target1Loc = new GridLocation(target1Row, target1Col);
 
-    if(remainingTime <=0 ){
-  //Erase image from previous location
+    if(remainingTime <= 0){
+      //Erase image from previous location
       level1Grid.clearTileImage(target1Loc);
 
       //change the field for the target's row and column
@@ -397,14 +407,14 @@ public void updateScreen(){
     //update other screen elements
     level1Grid.showImages();
 
-    if (targetCount == targetScore ){
+    if(targetCount == targetScore){
 
-      if (points== targetScore){
-      currentScreen = level1Post;
+      if (points == targetScore){
+        currentScreen = successLvl1;
+      } else { 
+        currentScreen = failLvl1;
       }
-      else { currentScreen = level3Post;}
     }
-
   }
   
   //UPDATE: level2Grid Screen
@@ -436,12 +446,14 @@ public void updateScreen(){
     level2Grid.showImages();
 
 
-    if (targetCount == targetScore2 ){
+    if (targetCount == targetScore2){
 
-      if (points2== targetScore2){
-      currentScreen = level2Post;
+      if (points2 == targetScore2){
+        currentScreen = level2Post;
       }
-      else { currentScreen = level4Post;}
+      else { 
+        currentScreen = level4Post;
+      }
     }
   }
 
