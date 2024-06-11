@@ -64,6 +64,15 @@ int target3Row = 3;
 int target3Col = 0;
 int health3 = 3;
 
+
+//
+Screen level1Post; 
+Screen level2Post;
+Screen level3Post;
+Screen level4Post;
+Screen level5Post; 
+Screen level6Post;
+
 //VARIABLES: EndScreen
 World endScreen;
 PImage endBg;
@@ -79,7 +88,7 @@ long remainingTime = 20000;
 int firstTry = 2000; 
 int secondTry = 1500;
 int thirdTry = 500; 
-
+int targetCount= 0; 
 
 //------------------ REQUIRED PROCESSING METHODS --------------------//
 
@@ -111,6 +120,12 @@ void setup() {
   
   //SETUP: Screens, Worlds, Grids
   splashScreen = new Screen("splash", splashBg);
+  level1Post = new Screen("intro School", null);
+  level2Post = new Screen("intro1Boss", null);
+  level3Post = new Screen("Return1", null);
+  level4Post = new Screen("Return2", null);
+  level5Post = new Screen("Final9Boss", null);
+  level6Post = new Screen("Return3", null);
   menuScreen = new Screen("menu", menuBg);
   level1Grid = new Grid("academy", level1Bg, 6, 8);
   level2Grid = new Grid("dungeon", level2Bg, 6, 8);
@@ -233,7 +248,7 @@ void mouseClicked(){
 
       //successful click, then add point
       points++;
-
+      targetCount ++; 
       //initialize new timer
       startTime = currentScreen.getScreenTime();
     }
@@ -257,7 +272,7 @@ void mouseClicked(){
 
       //successful click, then add point
       points2++;
-
+targetCount++; 
       //initialize new timer
       startTime = currentScreen.getScreenTime();
     }
@@ -281,7 +296,7 @@ void mouseClicked(){
 
       //successful click, then add point
       points3++;
-
+      targetCount ++; 
       //initialize new timer
       startTime = currentScreen.getScreenTime();
     }
@@ -332,6 +347,7 @@ public void updateScreen(){
 
     if(b1.isClicked()){
       currentScreen = level1Grid;
+
     } else if (b2.isClicked()){
       currentScreen = level2Grid;
     } else if (b3.isClicked()){
@@ -357,8 +373,10 @@ public void updateScreen(){
       //change the field for the target's row and column
       target1Row = (int) (Math.random()*level1Grid.getNumRows());
       target1Col = (int) (Math.random()*level1Grid.getNumCols());
+
+      targetCount++; 
       startTime = currentScreen.getScreenTime();
- }
+    }
 
     //Display the target1 image
     target1Loc = new GridLocation(target1Row, target1Col);
@@ -366,6 +384,15 @@ public void updateScreen(){
       
     //update other screen elements
     level1Grid.showImages();
+
+    if (targetCount == targetScore ){
+
+      if (points== targetScore){
+      currentScreen = level1Post;
+      }
+      else { currentScreen = level3Post;}
+    }
+
   }
   
   //UPDATE: level2Grid Screen
@@ -395,6 +422,15 @@ public void updateScreen(){
 
     //update other screen elements
     level2Grid.showImages();
+
+
+    if (targetCount == targetScore2 ){
+
+      if (points2== targetScore2){
+      currentScreen = level2Post;
+      }
+      else { currentScreen = level4Post;}
+    }
   }
 
   //UPDATE: level3Grid Screen
@@ -423,6 +459,13 @@ public void updateScreen(){
 
     //update other screen elements
     level3Grid.showImages();
+    if (targetCount == targetScore3 ){
+
+      if (points== targetScore3){
+      currentScreen = level5Post;
+      }
+      else { currentScreen = level6Post;}
+    }
   }
 
 
