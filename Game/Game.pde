@@ -411,8 +411,10 @@ public void updateScreen(){
 
       if (points== targetScore){
       currentScreen = level1Post;
+      targetCount = 0; 
       }
-      else { currentScreen = level3Post;}
+      else { currentScreen = level3Post;
+      targetCount = 0; }
     }
 
   }
@@ -450,8 +452,11 @@ public void updateScreen(){
 
       if (points2== targetScore2){
       currentScreen = level2Post;
+      targetCount = 0;
+
       }
-      else { currentScreen = level4Post;}
+      else { currentScreen = level4Post;
+      targetCount = 0;}
     }
   }
 
@@ -485,8 +490,10 @@ public void updateScreen(){
 
       if (points== targetScore3){
       currentScreen = level5Post;
+      targetCount = 0;
       }
-      else { currentScreen = level6Post;}
+      else { currentScreen = level6Post;
+      targetCount = 0;}
     }
   }
 
