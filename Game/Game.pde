@@ -1,9 +1,10 @@
+import processing.sound.*;
+
 /* Game Class Starter File
  * Authors: Anika Adity & Naomi Santos Fernandez & Anika Tasmin
  * Last Edit: 5/22/2024
  */
 
-//import processing.sound.*;
 
 //------------------ GAME VARIABLES --------------------//
 
@@ -35,6 +36,9 @@ int points = 0;
 int target1Row = 3;
 int target1Col = 0;
 int health = 3;
+
+// level 1 sound 
+SoundFile file;
 
 
 //VARIABLES: Level2Grid Pixel-based Screen
@@ -85,6 +89,7 @@ void setup() {
   imageMode(CORNER);    //Set Images to read coordinates at corners
   //fullScreen();   //only use if not using a specfic bg image
   
+  
   //SETUP: Set the title on the title bar
   surface.setTitle(titleText);
 
@@ -131,6 +136,11 @@ void setup() {
   // Load a soundfile from the /data folder of the sketch and play it back
   // song = new SoundFile(this, "sounds/Lenny_Kravitz_Fly_Away.mp3");
   // song.play();
+  
+    // Load a soundfile from the /data folder of the sketch and play it back
+  file = new SoundFile(this, "sounds/level1.mp3");
+  file.play();
+
   
   imageMode(CORNER);    //Set Images to read coordinates at corners
   //fullScreen();   //only use if not using a specfic bg image
