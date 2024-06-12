@@ -14,16 +14,35 @@ String extraText = " The Archery Academy Of Lumina";
 
 //VARIABLES: Splash Screen
 Screen splashScreen;
-String splashBgFile = "images/test.jpg";
+String splashBgFile = "images/mainbg.png";
 PImage splashBg;
+Button playButton = new Button("rect", 50, 525, 100, 50, "PLAY");
 
 //VARIABLES: Menu Screen
 Screen menuScreen;
-String menuBgFile = "images/menu.jpg";
+String menuBgFile = "images/menu.png";
 PImage menuBg;
-Button b1 = new Button("rect", 450, 525, 100, 50, "EASY");
-Button b2 = new Button("rect", 550, 525, 100, 50, "MODERATE");
-Button b3 = new Button("rect", 650, 525, 100, 50, "HARD");
+Button easyButton = new Button("rect", 450, 525, 100, 50, "EASY");
+Button modButton = new Button("rect", 550, 525, 100, 50, "MODERATE");
+Button hardButton = new Button("rect", 650, 525, 100, 50, "HARD");
+
+//VARIABLES: Level Screen (Rules/Objective)
+Screen level1Screen;
+String level1ScreenBgFile = "images/level1screen.png";
+PImage level1ScreenBg;
+
+Screen level2Screen;
+String level2ScreenBgFile = "images/level2screen.png";
+PImage level2ScreenBg;
+
+Screen level3Screen;
+String level3ScreenBgFile = "images/level3screen.png";
+PImage level3ScreenBg;
+
+Button menuButton = new Button("rect", 550, 525, 100, 50, "MENU");
+Button level1Button = new Button("rect", 650, 525, 100, 50, "RANGE");
+Button level2Button = new Button("rect", 650, 525, 100, 50, "DUNGEON");
+Button level3Button = new Button("rect", 650, 525, 100, 50, "FINAL BOSS");
 
 //VARIABLES: Level1Grid Screen
 Grid level1Grid;
@@ -33,14 +52,13 @@ String level1BgFile = "images/mode1.jpg";
 PImage target1;
 String target1File = "images/target1.png";
 int points = 0;
-int targetScore= 10;
+int targetScore = 20;
 int target1Row = 3;
 int target1Col = 0;
 int health = 3;
 
-// level 1 sound 
+//level 1 sound 
 SoundFile file;
-
 
 //VARIABLES: Level2Grid Pixel-based Screen
 Grid level2Grid;
@@ -50,7 +68,7 @@ String level2BgFile = "images/mode2.jpg";
 PImage target2;
 String target2File = "images/target2.png";
 int points2 = 0;
-int targetScore2 = 20;
+int targetScore2 = 30;
 int target2Row = 3;
 int target2Col = 0;
 int health2 = 3;
@@ -63,30 +81,41 @@ String level3BgFile = "images/mode3.jpg";
 PImage target3;
 String target3File = "images/target3.png";
 int points3 = 0;
-int targetScore3= 30;
+int targetScore3= 20;
 int target3Row = 3;
 int target3Col = 0;
 int health3 = 3;
 
 
-//Result Splash Screens (For the plot)
+//VARIABLES: Result Splash Screens (For the plot)
 Screen successLvl1;
 PImage successLvl1Bg;
-String successLvl1BgFile = "images/level1success.jpg";
+String successLvl1BgFile = "images/level1success.png";
 
 Screen failLvl1;
 PImage failLvl1Bg;
-String failLvl1BgFile = "images/level1fail.jpg";
+String failLvl1BgFile = "images/level1fail.png";
 
-Screen level2Post;
-Screen level4Post;
-Screen level5Post; 
-Screen level6Post;
+Screen successLvl2;
+PImage successLvl2Bg;
+String successLvl2BgFile = "images/level2success.png";
+
+Screen failLvl2;
+PImage failLvl2Bg;
+String failLvl2BgFile = "images/level2fail.png";
+
+Screen successLvl3;
+PImage successLvl3Bg;
+String successLvl3BgFile = "images/level3success.png";
+
+Screen failLvl3;
+PImage failLvl3Bg;
+String failLvl3BgFile = "images/level3fail.png";
 
 //VARIABLES: EndScreen
 World endScreen;
 PImage endBg;
-String endBgFile = "images/youwin.png";
+String endBgFile = "images/mainbg.png";
 
 
 //VARIABLES: Whole Game
@@ -97,7 +126,7 @@ long startTime = 0;
 long remainingTime = 20000;
 int firstTry = 2000; 
 int secondTry = 1500;
-int thirdTry = 500; 
+int thirdTry = 1000; 
 int targetCount= 0; 
 
 //------------------ REQUIRED PROCESSING METHODS --------------------//
@@ -117,14 +146,17 @@ void setup() {
   //SETUP: Load BG images used in all screens
   splashBg = loadImage(splashBgFile);
   splashBg.resize(width, height);
+
   menuBg = loadImage(menuBgFile);
   menuBg.resize(width, height);
+
   level1Bg = loadImage(level1BgFile);
   level1Bg.resize(width, height);
   level2Bg = loadImage(level2BgFile);
   level2Bg.resize(width, height);
   level3Bg = loadImage(level3BgFile);
   level3Bg.resize(width, height);
+
   endBg = loadImage(endBgFile);
   endBg.resize(width, height);
 
@@ -132,19 +164,42 @@ void setup() {
   successLvl1Bg.resize(width, height);
   failLvl1Bg = loadImage(failLvl1BgFile);
   failLvl1Bg.resize(width, height);
+  successLvl2Bg = loadImage(successLvl2BgFile);
+  successLvl2Bg.resize(width, height);
+  failLvl2Bg = loadImage(failLvl2BgFile);
+  failLvl2Bg.resize(width, height);
+  successLvl3Bg = loadImage(successLvl3BgFile);
+  successLvl3Bg.resize(width, height);
+  failLvl3Bg = loadImage(failLvl3BgFile);
+  failLvl3Bg.resize(width, height);
+
+  level1ScreenBg = loadImage(level1ScreenBgFile);
+  level1ScreenBg.resize(width, height);
+  level2ScreenBg = loadImage(level2ScreenBgFile);
+  level2ScreenBg.resize(width, height);
+  level3ScreenBg = loadImage(level3ScreenBgFile);
+  level3ScreenBg.resize(width, height);
   
   //SETUP: Screens, Worlds, Grids
   splashScreen = new Screen("splash", splashBg);
-  successLvl1 = new Screen("intro School", successLvl1Bg);
-  level2Post = new Screen("intro1Boss", null);
-  failLvl1 = new Screen("Return1", failLvl1Bg);
-  level4Post = new Screen("Return2", null);
-  level5Post = new Screen("Final9Boss", null);
-  level6Post = new Screen("Return3", null);
+
+  successLvl1 = new Screen("intro academy", successLvl1Bg);
+  failLvl1 = new Screen("return to level 1", failLvl1Bg);
+  successLvl2 = new Screen("intro to harbingers", successLvl2Bg);
+  failLvl2 = new Screen("return to level 2", failLvl2Bg);
+  successLvl3 = new Screen("intro to final boss", successLvl3Bg);
+  failLvl3 = new Screen("return to level 3", failLvl3Bg);
+ 
   menuScreen = new Screen("menu", menuBg);
+
+  level1Screen = new Screen("rules level1", level1ScreenBg);
+  level2Screen = new Screen("rules level2", level2ScreenBg);
+  level3Screen = new Screen("rules level3", level3ScreenBg);
+
   level1Grid = new Grid("academy", level1Bg, 6, 8);
   level2Grid = new Grid("dungeon", level2Bg, 6, 8);
   level3Grid = new Grid("boss", level3Bg, 6, 8);
+
   endScreen = new World("end", endBg);
   currentScreen = splashScreen;
   
@@ -168,7 +223,7 @@ void setup() {
   // song = new SoundFile(this, "sounds/Lenny_Kravitz_Fly_Away.mp3");
   // song.play();
   
-    // Load a soundfile from the /data folder of the sketch and play it back
+  // Load a soundfile from the /data folder of the sketch and play it back
   file = new SoundFile(this, "sounds/level1.mp3");
   file.play();
 
@@ -185,13 +240,6 @@ void draw() {
 
   updateTitleBar();
   updateScreen();
-
-  //simple timing handling
-  // if (msElapsed % 300 == 0) {
-  //   //sprite handling
-  //   populateSprites();
-  //   moveSprites();
-  // }
   msElapsed +=10;
   currentScreen.pause(10);
 
@@ -240,12 +288,6 @@ void keyPressed(){
 
 //Known Processing method that automatically will run when a mouse click triggers it
 void mouseClicked(){
-  
-  //check if click was successful
-  // System.out.println("Mouse was clicked at (" + mouseX + "," + mouseY + ")");
-  // if(currentGrid != null){
-  //   System.out.println("Grid location: " + currentGrid.getMouseGridLocation());
-  // }
 
   //what to do if clicked? Move target to a random location??
 
@@ -254,8 +296,7 @@ void mouseClicked(){
 
     //Store target GridLocation
     GridLocation targetLoc = new GridLocation(target1Row, target1Col);
-// Limit time
- 
+
     //check if the click was on the target's location??
     if (targetLoc.equals(level1Grid.getMouseGridLocation())){
       
@@ -268,7 +309,8 @@ void mouseClicked(){
 
       //successful click, then add point
       points++;
-      targetCount ++; 
+      targetCount++;
+
       //initialize new timer
       startTime = currentScreen.getScreenTime();
     }
@@ -317,7 +359,8 @@ void mouseClicked(){
 
       //successful click, then add point
       points3++;
-      targetCount ++; 
+      targetCount++;
+
       //initialize new timer
       startTime = currentScreen.getScreenTime();
     }
@@ -333,7 +376,7 @@ void mouseClicked(){
 
 //------------------ CUSTOM  GAME METHODS --------------------//
 
-//method to update the Title Bar of the Game
+//Method to update the Title Bar of the Game
 public void updateTitleBar(){
 
   if(!isGameOver()) {
@@ -344,16 +387,18 @@ public void updateTitleBar(){
     if (currentScreen == level1Grid ){
      surface.setTitle(titleText +  "    Total Points: " + points + " Time: " + (float) (remainingTime)/1000);
     }
-    if ( currentScreen == level2Grid ){ 
+    if (currentScreen == level2Grid ){ 
      surface.setTitle(titleText +  "    Total Points: " + points2 + " Time: " + remainingTime);
     }
-    if ( currentScreen== level3Grid ){
+    if (currentScreen== level3Grid ){
        surface.setTitle(titleText +  "    Total Points: " + points3 + " Time: " + remainingTime);
   
     }
   
   }
 }
+
+//Method to update 
 
 //method to update what is drawn on the screen each frame
 public void updateScreen(){
@@ -365,25 +410,92 @@ public void updateScreen(){
 
   //UPDATE: SplashScreen
   if(currentScreen == splashScreen){
-
-    if(splashScreen.getScreenTime() > 3000 && splashScreen.getScreenTime() < 5000){
+    playButton.show();
+    
+    if(playButton.isClicked()){
       currentScreen = menuScreen;
     }
   }
 
   //UPDATE: Menu Screen
   if(currentScreen == menuScreen){
+    easyButton.show();
+    modButton.show();
+    hardButton.show();
 
-    b1.show();
-    b2.show();
-    b3.show();
+    if(easyButton.isClicked()){
+      currentScreen = level1Screen;
+    } else if(modButton.isClicked()){
+      currentScreen = level2Screen;
+    } else if(hardButton.isClicked()){
+      currentScreen = level3Screen;
+    }
+  }
 
-    if(b1.isClicked()){
+  //UPDATE: Level1Screen, Level2Screen, Level3Screen (Rules/Objective)
+  if(currentScreen == level1Screen){
+    level1Button.show();
+
+    if(level1Button.isClicked()){
       currentScreen = level1Grid;
+    }
+  }
 
-    } else if (b2.isClicked()){
+  if(currentScreen == level2Screen){
+    level2Button.show();
+
+    if(level2Button.isClicked()){
       currentScreen = level2Grid;
-    } else if (b3.isClicked()){
+    }
+  }
+
+  if(currentScreen == level3Screen){
+    level3Button.show();
+
+    if(level3Button.isClicked()){
+      currentScreen = level3Grid;
+    }
+  }
+
+  //UPDATE: Buttons for other screen elements (fail/success endings)
+  if(currentScreen == successLvl1){
+    level2Button.show();
+    if(level2Button.isClicked()){
+      currentScreen = level2Grid;
+    }
+  }
+  
+  if (currentScreen == failLvl1){
+    level1Button.show();
+    if(level1Button.isClicked()){
+      currentScreen = level1Grid;
+    }
+  }
+
+  if(currentScreen == successLvl2){
+    level3Button.show();
+    if(level3Button.isClicked()){
+      currentScreen = level3Grid;
+    }
+  }
+
+  if(currentScreen == failLvl2){
+    level2Button.show();
+    if(level2Button.isClicked()){
+      currentScreen = level2Grid;
+    }
+  }
+
+  if(currentScreen == successLvl3){
+    playButton.show();
+    if(playButton.isClicked()){
+      currentScreen = splashScreen;
+    }
+  }
+
+  if(currentScreen == failLvl3){
+    level3Button.show();
+    if(level3Button.isClicked()){
       currentScreen = level3Grid;
     }
   }
@@ -405,9 +517,10 @@ public void updateScreen(){
       //change the field for the target's row and column
       target1Row = (int) (Math.random()*level1Grid.getNumRows());
       target1Col = (int) (Math.random()*level1Grid.getNumCols());
-
-      targetCount++; 
       startTime = currentScreen.getScreenTime();
+
+      //counter
+      //targetCount++;
     }
 
     //Display the target1 image
@@ -418,11 +531,12 @@ public void updateScreen(){
     level1Grid.showImages();
 
     if(targetCount == targetScore){
-
       if (points == targetScore){
         currentScreen = successLvl1;
+        targetCount = 0;
       } else { 
         currentScreen = failLvl1;
+        targetCount = 0;
       }
     }
   }
@@ -432,21 +546,23 @@ public void updateScreen(){
     System.out.print("2");
     currentGrid = level2Grid;
 
-//update timer target2
+    //update timer target2
     remainingTime = secondTry-(currentScreen.getScreenTime()-startTime);
 
     GridLocation target2Loc = new GridLocation(target2Row, target2Col);
 
-    if(remainingTime <=0 ){
-  //Erase image from previous location
+    if(remainingTime <= 0){
+      //Erase image from previous location
       level2Grid.clearTileImage(target2Loc);
 
       //change the field for the target's row and column
       target2Row = (int) (Math.random()*level2Grid.getNumRows());
       target2Col = (int) (Math.random()*level2Grid.getNumCols());
       startTime = currentScreen.getScreenTime();
- }
 
+      //counter
+      //targetCount++;
+ }
 
     //Display the target2 image
     target2Loc = new GridLocation(target2Row, target2Col);
@@ -455,16 +571,14 @@ public void updateScreen(){
     //update other screen elements
     level2Grid.showImages();
 
-
     if (targetCount == targetScore2){
-
       if (points2== targetScore2){
-      currentScreen = level2Post;
-      targetCount = 0;
-
+        currentScreen = successLvl2;
+        targetCount = 0;
+      } else { 
+        currentScreen = failLvl2;
+        targetCount = 0;
       }
-      else { currentScreen = level4Post;
-      targetCount = 0;}
     }
   }
 
@@ -473,35 +587,38 @@ public void updateScreen(){
     System.out.print("3");
     currentGrid = level3Grid;
     
-//update timer target3
+  //update timer target3
     remainingTime = thirdTry-(currentScreen.getScreenTime()-startTime);
 
     GridLocation target3Loc = new GridLocation(target3Row, target3Col);
 
     if(remainingTime <=0 ){
-  //Erase image from previous location
+      //Erase image from previous location
       level3Grid.clearTileImage(target3Loc);
 
       //change the field for the target's row and column
       target3Row = (int) (Math.random()*level3Grid.getNumRows());
       target3Col = (int) (Math.random()*level3Grid.getNumCols());
       startTime = currentScreen.getScreenTime();
+
+      //counter
+      //targetCount++;
  }
 
     //Display the target3 image
-   target3Loc = new GridLocation(target3Row, target3Col);
+    target3Loc = new GridLocation(target3Row, target3Col);
     level3Grid.setTileImage(target3Loc, target3);
 
     //update other screen elements
     level3Grid.showImages();
     if (targetCount == targetScore3 ){
-
       if (points== targetScore3){
-      currentScreen = level5Post;
-      targetCount = 0;
+        currentScreen = successLvl3;
+        targetCount = 0;
+      } else {
+        currentScreen = failLvl3;
+        targetCount = 0;
       }
-      else { currentScreen = level6Post;
-      targetCount = 0;}
     }
   }
 
