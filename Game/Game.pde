@@ -489,7 +489,7 @@ public void updateScreen(){
   if(currentScreen == successLvl3){
     playButton.show();
     if(playButton.isClicked()){
-      currentScreen = splashScreen;
+      currentScreen = endScreen;
     }
   }
 
@@ -592,7 +592,7 @@ public void updateScreen(){
 
     GridLocation target3Loc = new GridLocation(target3Row, target3Col);
 
-    if(remainingTime <=0 ){
+    if(remainingTime <= 0){
       //Erase image from previous location
       level3Grid.clearTileImage(target3Loc);
 
