@@ -96,6 +96,7 @@ Screen failLvl1;
 PImage failLvl1Bg;
 String failLvl1BgFile = "images/level1fail.png";
 
+
 Screen successLvl2;
 PImage successLvl2Bg;
 String successLvl2BgFile = "images/level2success.png";
@@ -224,7 +225,7 @@ void setup() {
   // song.play();
   
   // Load a soundfile from the /data folder of the sketch and play it back
-  file = new SoundFile(this, "sounds/level1.mp3");
+  file = new SoundFile(this, "sounds/level1 Screen & grid.mp3");
   file.play();
 
   
